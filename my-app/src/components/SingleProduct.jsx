@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CartContext } from "../context/CartContext";
 import { ClickedProductContext } from "../context/ClickedProductContext";
@@ -16,7 +15,6 @@ import { FaStar } from "react-icons/fa";
 import { IoPerson } from "react-icons/io5";
 
 const SingleProduct = () => {
-  const [quantity, setQuantity] = useState(1);
   const { productId } = useParams();
   const { clickedProduct, clickedProductHandler } = useContext(
     ClickedProductContext
@@ -101,7 +99,7 @@ const SingleProduct = () => {
       notifyProductAlreadyInCart(clickedProduct.name);
       return;
     } else {
-      addToCart(clickedProduct, quantity);
+      addToCart(clickedProduct, 1);
       notifyProductAddedToCart(clickedProduct.name);
     }
   };

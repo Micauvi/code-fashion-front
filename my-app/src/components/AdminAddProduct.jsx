@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import useInput from "../hooks/useInput"; // Import the useInput hook
+import useInput from "../hooks/useInput";
 
 const AddProduct = () => {
   const navigate = useNavigate();

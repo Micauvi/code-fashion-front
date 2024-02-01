@@ -1,16 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import AddProduct from "./AdminAddProduct";
+import useAdmin from "../hooks/useAdmin";
 
 const Admin = () => {
+  // const users = useAdmin();
+  // const hasAccess = useAdmin();
   const [users, setUsers] = useState([]);
   const [products, setProducts] = useState([]);
   const [hasAccess, setHasAccess] = useState(false);
   const [redirectToAddProduct, setRedirectToAddProduct] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
-  const navigate = useNavigate();
-
+  //ver el tema de administrador
   useEffect(() => {
     const userSetter = async () => {
       try {
@@ -22,6 +23,7 @@ const Admin = () => {
         );
         if (response.status === 200) {
           setUsers(response.data);
+
           setHasAccess(true);
         } else if (response.status === 403) {
           setHasAccess(false);

@@ -6,10 +6,9 @@ const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const [quantities, setQuantities] = useState([]);
 
-  const [user, setUser] = useState(null); // User information
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Retrieve cart items and quantities from local storage on component mount
     const storedCartItems = localStorage.getItem("cartItems");
     const storedQuantities = localStorage.getItem("quantities");
     if (storedCartItems && storedQuantities) {
@@ -19,13 +18,11 @@ const CartProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    // Store cart items and quantities in local storage whenever they change
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
     localStorage.setItem("quantities", JSON.stringify(quantities));
   }, [cartItems, quantities]);
 
   useEffect(() => {
-    // Store cart items in local storage whenever it changes
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
@@ -62,7 +59,6 @@ const CartProvider = ({ children }) => {
         cartItems,
         addToCart,
         removeFromCart,
-        clearCart,
         user,
         setCartItems,
         setUserInformation,

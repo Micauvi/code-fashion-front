@@ -1,19 +1,19 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getAllCategories } from "../utils/categories.utils";
-import { Link } from "react-router-dom";
-import { ProductContext } from "../context/ProductContext";
 
-const Categories = () => {
-  const [allCategories, setCategories] = useState([]);
-  const { categoryHandler } = useContext(ProductContext);
+const Categories = ({ setSelectedCategory, selectedCategory }) => {
+  const [allCategories, setAllCategories] = useState([]);
+
+  const categoryHandler = (e) => {
+    setSelectedCategory(e.target.value);
+  };
 
   useEffect(() => {
     const categoriesSetter = async () => {
-      setCategories(await getAllCategories());
+      setAllCategories(await getAllCategories());
     };
     categoriesSetter();
   }, []);
-
   return (
     <select
       name="categoryList"
@@ -21,8 +21,12 @@ const Categories = () => {
       onChange={categoryHandler}
     >
       <option value="all">Categorias</option> 
-      {allCategories?.map((category) => {
-        return <option value={category}>{category}</option>;
+      {allCategories?.map((category, i) => {
+        return (
+          <option key={i} value={category}>
+            {category}
+          </option>
+        );
       })}
     </select>
   );

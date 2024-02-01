@@ -1,31 +1,36 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ProductContext } from "../context/ProductContext";
-import { CartContext } from "../context/CartContext";
 import "react-toastify/dist/ReactToastify.css";
-import AddToCartButton from "./AddToCartButton";
-import SearchBar from "./SearchBar";
-import Categories from "./Categories";
+import { getProductsByCategory } from "../utils/categories.utils";
 
-const ProductPreview = () => {
-  const { addToCart } = useContext(CartContext);
-  const { products, searchBarParam, productPreview, selectedCategory } =
-    useContext(ProductContext);
-
-  const handleAddToCart = (product) => {
-    addToCart(product);
-  };
+const ProductPreview = ({ searchBar, selectedCategory }) => {
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
+    const productPreview = async () => {
+      try {
+        if (selectedCategory.length && searchBar.length > 1) {
+          let foundProducts = await getProductsByCategory(selectedCategory);
+
+          foundProducts = foundProducts.filter((product) =>
+            product.name.toLowerCase().includes(searchBar.toLowerCase())
+          );
+
+          setProducts(foundProducts);
+        }
+        if (selectedCategory && searchBar.length < 1) {
+          const foundProducts = await getProductsByCategory(selectedCategory);
+          setProducts(foundProducts);
+        }
+      } catch (error) {
+        return { msg: "Error retrieving products", error };
+      }
+    };
     productPreview();
-  }, [searchBarParam, selectedCategory]);
+  }, [searchBar, selectedCategory]);
 
   return (
     <>
-      <div className="flex flex-row">
-        <SearchBar />
-        <Categories />
-      </div>
       <div className="grid grid-cols-3 gap-4 relative shadow-lg py-4">
         {products.length === 0 ? (
           <p>No se encuentran productos</p>

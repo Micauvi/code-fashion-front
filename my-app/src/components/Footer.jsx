@@ -20,7 +20,6 @@ const Footer = () => {
             </li>
             <li>
               <Link
-                // en caso de ser diferente en NavBar modificar
                 to="/category/hombre"
                 className="text-gray-400 hover:text-white text-sm "
               >
@@ -29,7 +28,6 @@ const Footer = () => {
             </li>
             <li>
               <Link
-                // en caso de ser diferente en NavBar modificar
                 to="/category/mujer"
                 className="text-gray-400 hover:text-white text-sm "
               >
@@ -42,17 +40,17 @@ const Footer = () => {
           <h4 className=" font-semibold text-sm">Siguenos</h4>
           <ul className="mt-2 flex space-x-2">
             <li>
-              <a href="#" className="text-gray-400 hover:text-white text-sm">
+              <a href="#/" className="text-gray-400 hover:text-white text-sm">
                 Facebook
               </a>
             </li>
             <li>
-              <a href="#" className="text-gray-400 hover:text-white text-sm">
+              <a href="/" className="text-gray-400 hover:text-white text-sm">
                 Twitter
               </a>
             </li>
             <li>
-              <a href="#" className="text-gray-400 hover:text-white text-sm">
+              <a href="/" className="text-gray-400 hover:text-white text-sm">
                 Instagram
               </a>
             </li>
