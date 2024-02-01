@@ -15,17 +15,26 @@ import Checkout from "./components/Checkout";
 import CheckoutConfirmed from "./components/CheckoutConfirmed";
 
 import { CartProvider } from "./context/CartContext";
-import ProductProvider from "./context/ProductContext";
 import Admin from "./components/Admin";
 
 import Profile from "./components/Profile";
 
 import SuperAdmin from "./components/SuperAdmin";
+import { useState } from "react";
 
 function App() {
+  const [searchBar, setSearchBar] = useState("");
+
+  const [selectedCategory, setSelectedCategory] = useState("all");
+
   return (
     <div className="App">
-      <Navbar />
+      <Navbar
+        searchBar={searchBar}
+        setSearchBar={setSearchBar}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+      />
 
       <ToastContainer />
       <Routes>
@@ -50,9 +59,10 @@ function App() {
           element={
             <CartProvider>
               <ClickedProductContextProvider>
-                <ProductProvider>
-                  <ProductPreview />
-                </ProductProvider>
+                <ProductPreview
+                  searchBar={searchBar}
+                  selectedCategory={selectedCategory}
+                />
               </ClickedProductContextProvider>
             </CartProvider>
           }

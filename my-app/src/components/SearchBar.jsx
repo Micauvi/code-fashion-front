@@ -1,13 +1,13 @@
-import React, { useContext } from "react";
-import { ProductContext } from "../context/ProductContext";
+import React from "react";
 
-const SearchBar = () => {
-  const { searchBarHandler, searchBarParam } = useContext(ProductContext);
-
+const SearchBar = ({ searchBar, setSearchBar }) => {
+  const searchBarHandler = (e) => {
+    setSearchBar(e.target.value);
+  };
   return (
     <div className="border-solid border-indigo-600">
       <input
-        value={searchBarParam}
+        value={searchBar}
         onChange={searchBarHandler}
         type="text"
         placeholder="Busca productos"

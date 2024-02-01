@@ -1,7 +1,5 @@
 import React, { useContext } from "react";
 import { LoginContext } from "../context/LoginContext";
-// import { useNavigate } from 'react-router-dom'
-// cuando se inicie sesion correctamente redirigir a /home con navigate
 
 function Login() {
   const { userToLogin, setLoginInput, loginUser } = useContext(LoginContext);
