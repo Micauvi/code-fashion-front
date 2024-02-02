@@ -63,16 +63,16 @@ const ShoppingCart = () => {
               cartItems.map((product, index) => (
                 <tr key={index}>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0 h-10 w-10">
+                    <div className=" items-center">
+                      <div className="h-10 w-14">
                         <img
-                          className="h-10 w-10 rounded-full"
+                          className="  rounded-full"
                           src={product.image}
                           alt={product.name}
                         />
                       </div>
                       <div className="ml-4">
-                        <div className="text-sm font-medium text-gray-900">
+                        <div className="text-xl font-medium text-gray-900">
                           {product.name}
                         </div>
                         <div className="text-sm text-gray-500">
@@ -120,11 +120,11 @@ const ShoppingCart = () => {
           to="/checkout"
           className="px-4 py-2 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-500"
         >
-          <button>Checkout</button>
+          <button className=" text-sm">COMPRAR</button>
         </Link>
       </div>
       <div className="mt-4 text-right text-gray-900 font-medium">
-        Total Price: ${totalPrice}
+        Precio Total: ${totalPrice}
       </div>
     </div>
   );

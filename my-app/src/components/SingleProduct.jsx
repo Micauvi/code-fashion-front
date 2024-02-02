@@ -20,73 +20,73 @@ const SingleProduct = () => {
     ClickedProductContext
   );
   const { cartItems, addToCart } = useContext(CartContext);
-  const [reviews, setReviews] = useState([]);
-  const [rating, setRating] = useState("");
-  const [comments, setComments] = useState("");
+  // const [reviews, setReviews] = useState([]);
+  // const [rating, setRating] = useState("");
+  // const [comments, setComments] = useState("");
 
   useEffect(() => {
     clickedProductHandler(productId);
   }, []);
 
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8000/api/reviews/product/${productId}`
-        );
-        setReviews(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchReviews();
-  }, [productId]);
+  // useEffect(() => {
+  //   const fetchReviews = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `http://localhost:8000/api/reviews/product/${productId}`
+  //       );
+  //       setReviews(response.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchReviews();
+  // }, [productId]);
 
-  const renderStars = (rating) => {
-    const stars = [];
-    for (let i = 0; i < 5; i++) {
-      stars.push(
-        <FaStar
-          key={i}
-          className={i < rating ? "text-yellow-500" : "text-gray-400"}
-        />
-      );
-    }
-    return <div className="stars-container flex">{stars}</div>;
-  };
+  // const renderStars = (rating) => {
+  //   const stars = [];
+  //   for (let i = 0; i < 5; i++) {
+  //     stars.push(
+  //       <FaStar
+  //         key={i}
+  //         className={i < rating ? "text-yellow-500" : "text-gray-400"}
+  //       />
+  //     );
+  //   }
+  //   return <div className="stars-container flex">{stars}</div>;
+  // };
 
-  const handleAddReview = async () => {
-    try {
-      if (!isLoggedIn()) {
-        notifyProductReview();
-        return;
-      }
-      const user = getLoggedUser();
+  // const handleAddReview = async () => {
+  //   try {
+  //     if (!isLoggedIn()) {
+  //       notifyProductReview();
+  //       return;
+  //     }
+  //     const user = getLoggedUser();
 
-      const response = await axios.post("http://localhost:8000/api/reviews", {
-        product_id: productId,
-        user_id: user.id,
-        rating,
-        comments,
-      });
-      const newReview = response.data;
-      setReviews((prevReviews) => [...prevReviews, newReview]);
-      setRating("");
-      setComments("");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     const response = await axios.post("http://localhost:8000/api/reviews", {
+  //       product_id: productId,
+  //       user_id: user.id,
+  //       rating,
+  //       comments,
+  //     });
+  //     const newReview = response.data;
+  //     setReviews((prevReviews) => [...prevReviews, newReview]);
+  //     setRating("");
+  //     setComments("");
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  const calculateAverageRating = () => {
-    if (reviews.length === 0) {
-      return 0;
-    }
+  // const calculateAverageRating = () => {
+  //   if (reviews.length === 0) {
+  //     return 0;
+  //   }
 
-    const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
-    const averageRating = totalRating / reviews.length;
-    return averageRating;
-  };
+  //   const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+  //   const averageRating = totalRating / reviews.length;
+  //   return averageRating;
+  // };
 
   const handleAddToCart = () => {
     const isInCart = cartItems.find((item) => item.id === clickedProduct.id);
@@ -106,35 +106,43 @@ const SingleProduct = () => {
 
   return (
     <>
-      <div className="bg-white rounded-lg shadow-lg p-4 mx-auto mt-8 max-w-md">
-        <div className="flex flex-col items-center">
+      <div className="flex bg-white rounded-lg shadow-lg p-4 mx-auto mt-8 justify-center">
+        <div className="flex gap-24">
           <img
             src={clickedProduct.image}
             alt="product_image"
-            className="w-64 h-64 object-cover rounded-md mb-4"
+            className=" object-cover rounded-md mb-4"
           />
-          <p className="text-2xl font-bold">{clickedProduct.name}</p>
-          <p className="text-gray-700 mb-2">{clickedProduct.description}</p>
-          <p className="text-green-600 font-bold">${clickedProduct.price}</p>
-          <p className="text-blue-500 mb-2">
-            Categorias: {clickedProduct.category_name?.join(", ")}
-          </p>
-          <p className="text-gray-700 mb-4">Marca: {clickedProduct.brand}</p>
+          <div className="">
+            <p className="text-4xl font-bold">{clickedProduct.name}</p>
+            <p className="text-gray-700 text-xl my-2">
+              {clickedProduct.description}
+            </p>
+            <p className="text-blue-500 text-xl  my-4">
+              Categorias: {clickedProduct.category_name?.join(", ")}
+            </p>
+            <p className="text-gray-700 text-xl  my-4">
+              Marca: {clickedProduct.brand}
+            </p>
+            <p className="text-green-600 text-xl my-4 font-bold">
+              ${clickedProduct.price}
+            </p>
 
-          <button
-            className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded"
-            onClick={handleAddToCart}
-          >
-            Agregar al carrito
-          </button>
+            <button
+              className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded items-end flex"
+              onClick={handleAddToCart}
+            >
+              Agregar al carrito
+            </button>
+          </div>
         </div>
       </div>
 
-      <div className="my-6 mx-10">
+      {/* <div className="my-6 mx-10">
         <h3 className="text-xl font-bold mb-4">Opiniones del producto</h3>
 
         <div className="mt-4 my-6">
-          <div className="flex space-x-4">
+          <div className="flex gap-3 flex-col">
             <input
               type="number"
               min="0"
@@ -166,9 +174,9 @@ const SingleProduct = () => {
               {reviews.length} calificaciones
             </p>
           </div>
-        </div>
+        </div> */}
 
-        {reviews.length === 0 ? (
+      {/* {reviews.length === 0 ? (
           <p>No hay valoraciones disponibles</p>
         ) : (
           <ul className="space-y-4">
@@ -186,8 +194,8 @@ const SingleProduct = () => {
               </li>
             ))}
           </ul>
-        )}
-      </div>
+        )} */}
+      {/* </div> */}
     </>
   );
 };
