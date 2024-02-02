@@ -21,9 +21,12 @@ import Profile from "./components/Profile";
 
 import SuperAdmin from "./components/SuperAdmin";
 import { useState } from "react";
+import useAdmin from "./hooks/useAdmin";
 
 function App() {
   const [searchBar, setSearchBar] = useState("");
+
+  const { hasAcces } = useAdmin();
 
   const [selectedCategory, setSelectedCategory] = useState("all");
 
@@ -34,6 +37,7 @@ function App() {
         setSearchBar={setSearchBar}
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
+        isSmall={false}
       />
 
       <ToastContainer />
@@ -61,7 +65,10 @@ function App() {
               <ClickedProductContextProvider>
                 <ProductPreview
                   searchBar={searchBar}
+                  setSearchBar={setSearchBar}
                   selectedCategory={selectedCategory}
+                  setSelectedCategory={setSelectedCategory}
+                  isSmall={true}
                 />
               </ClickedProductContextProvider>
             </CartProvider>
@@ -108,14 +115,17 @@ function App() {
         ></Route>
 
         <Route path="/orders" element={<OrdersHistory />} />
-
-        <Route path="/admin" element={<Admin />} />
-
+        {hasAcces ? (
+          <>
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/superadmin" element={<SuperAdmin />} />
+          </>
+        ) : (
+          ""
+        )}
         <Route path="/add-product" element={<Admin />} />
 
         <Route path="/profile" element={<Profile />} />
-
-        <Route path="/superadmin" element={<SuperAdmin />} />
       </Routes>
 
       <Footer />
