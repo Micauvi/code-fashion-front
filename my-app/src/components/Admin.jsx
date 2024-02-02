@@ -4,38 +4,10 @@ import AddProduct from "./AdminAddProduct";
 import useAdmin from "../hooks/useAdmin";
 
 const Admin = () => {
-  // const users = useAdmin();
-  // const hasAccess = useAdmin();
-  const [users, setUsers] = useState([]);
+  const { hasAccess, users, setUsers } = useAdmin();
   const [products, setProducts] = useState([]);
-  const [hasAccess, setHasAccess] = useState(false);
   const [redirectToAddProduct, setRedirectToAddProduct] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
-  //ver el tema de administrador
-  useEffect(() => {
-    const userSetter = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:8000/api/admin/users",
-          {
-            withCredentials: true,
-          }
-        );
-        if (response.status === 200) {
-          setUsers(response.data);
-
-          setHasAccess(true);
-        } else if (response.status === 403) {
-          setHasAccess(false);
-        }
-        return;
-      } catch (error) {
-        return { msg: "Error retrieving users", error };
-      }
-    };
-
-    userSetter();
-  }, []);
 
   const handleDelete = async (id) => {
     try {

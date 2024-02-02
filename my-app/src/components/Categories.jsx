@@ -17,7 +17,7 @@ const Categories = ({ setSelectedCategory, selectedCategory }) => {
   return (
     <select
       name="categoryList"
-      className="text-white  bg-indigo-500 border-solid border-indigo-600 border-1 hover:text-white rounded-md text-sm my-1"
+      className="text-white w-32 text-center flex  bg-indigo-500 border-solid border-indigo-600 border-1 hover:text-white rounded-md text-sm my-1"
       onChange={categoryHandler}
     >
       <option value="all">Categorias</option> 

@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import Categories from "./Categories";
+import useAdmin from "../hooks/useAdmin";
 const Navbar = ({
   searchBar,
   setSearchBar,
   setSelectedCategory,
   selectedCategory,
 }) => {
+  const { hasAccess } = useAdmin();
   const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -26,9 +28,24 @@ const Navbar = ({
       return { msg: "Error al desloguearse", error };
     }
   };
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+    const handleMediaQueryChange = (mediaQuery) => {
+      setIsSmallScreen(mediaQuery.matches);
+    };
+
+    handleMediaQueryChange(mediaQuery);
+    mediaQuery.addListener(handleMediaQueryChange);
+
+    return () => {
+      mediaQuery.removeListener(handleMediaQueryChange);
+    };
+  }, []);
 
   return (
-    <nav className=" bg-gray-800 relative shadow-lg z-20">
+    <nav className=" bg-gray-800 relative shadow-lg h-20 align-middle">
       <div className=" px-4 sm:px-6 relative lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex relative items-center">
@@ -43,45 +60,45 @@ const Navbar = ({
                 Fashion<span className="text-indigo-500">{" />"}</span>
               </Link>
             </div>
-            <div className="flex flex-row ml-12 gap-5">
-              <Categories
-                setSelectedCategory={setSelectedCategory}
-                selectedCategory={selectedCategory}
-              />
-              <SearchBar setSearchBar={setSearchBar} searchBar={searchBar} />
-            </div>
+            {!isSmallScreen ? (
+              <div className="flex flex-row ml-12 gap-5">
+                <Categories
+                  setSelectedCategory={setSelectedCategory}
+                  selectedCategory={selectedCategory}
+                />
+                <SearchBar setSearchBar={setSearchBar} searchBar={searchBar} />
+              </div>
+            ) : (
+              ""
+            )}
           </div>
-          <div className="hidden md:block">
+          <div className="">
             <div className="ml-4 flex items-center md:ml-6">
               {authToken ? (
                 <div className="relative inline-block text-left">
-                  <div>
-                    <div>
-                      <button
-                        onClick={() => setUserMenuOpen(!userMenuOpen)}
-                        type="button"
-                        className="bg-indigo-600 relative text-white px-4 py-2 rounded-md text-sm font-medium focus:outline-none"
-                        id="user-menu"
-                        aria-haspopup="true"
-                        aria-expanded="true"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          className="h-5 w-5"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M4 6h16M4 12h16M4 18h16"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
+                  <button
+                    onClick={() => setUserMenuOpen(!userMenuOpen)}
+                    type="button"
+                    className="bg-indigo-600 relative text-white px-4 py-2 rounded-md text-sm font-medium focus:outline-none"
+                    id="user-menu"
+                    aria-haspopup="true"
+                    aria-expanded="true"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      className="h-5 w-5"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M4 6h16M4 12h16M4 18h16"
+                      />
+                    </svg>
+                  </button>
 
                   {userMenuOpen && (
                     <div
@@ -110,20 +127,25 @@ const Navbar = ({
                       >
                         Mis ordenes
                       </Link>
+                      {hasAccess ? (
+                        <>
+                          <Link
+                            to="/superadmin"
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
+                          >
+                            SuperAdmin Panel
+                          </Link>
 
-                      <Link
-                        to="/superadmin"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
-                      >
-                        SuperAdmin Panel
-                      </Link>
-
-                      <Link
-                        to="/admin"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
-                      >
-                        Admin Panel
-                      </Link>
+                          <Link
+                            to="/admin"
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
+                          >
+                            Admin Panel
+                          </Link>
+                        </>
+                      ) : (
+                        ""
+                      )}
 
                       <button
                         onClick={handleLogout}

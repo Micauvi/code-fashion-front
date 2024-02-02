@@ -2,8 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 const useAdmin = () => {
-  const [hasAccess, setHasAccess] = useState(false);
   const [users, setUsers] = useState([]);
+  const [hasAccess, setHasAccess] = useState(false);
   useEffect(() => {
     const userSetter = async () => {
       try {
@@ -19,7 +19,6 @@ const useAdmin = () => {
         } else if (response.status === 403) {
           setHasAccess(false);
         }
-        return hasAccess, users;
       } catch (error) {
         return { msg: "Error retrieving users", error };
       }
@@ -27,5 +26,6 @@ const useAdmin = () => {
 
     userSetter();
   }, []);
+  return { hasAccess, users, setUsers };
 };
 export default useAdmin;
