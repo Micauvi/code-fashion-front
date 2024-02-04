@@ -5,6 +5,9 @@ import { Link, useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import Categories from "./Categories";
 import useAdmin from "../hooks/useAdmin";
+import Cart from "./Cart";
+import useCart from "../hooks/useCart";
+import { CartProvider } from "../context/CartContext";
 const Navbar = ({
   searchBar,
   setSearchBar,
@@ -12,6 +15,8 @@ const Navbar = ({
   selectedCategory,
 }) => {
   const { hasAccess } = useAdmin();
+  const { handleCartToggle, isCartOpen } = useCart();
+
   const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -46,7 +51,7 @@ const Navbar = ({
 
   return (
     <nav className=" bg-gray-800 relative shadow-lg">
-      <div className=" px-4 sm:px-6 relative lg:px-8">
+      <div className=" px-4 sm:px-6 relative lg:px-8 z-20">
         <div className="flex items-center justify-between h-16">
           <div className="flex relative items-center">
             <div
@@ -154,6 +159,11 @@ const Navbar = ({
                       >
                         Cerrar sesión
                       </button>
+                      <button onClick={handleCartToggle}>Abrir carrito</button>
+
+                      <CartProvider>
+                        <Cart />
+                      </CartProvider>
                     </div>
                   )}
                 </div>

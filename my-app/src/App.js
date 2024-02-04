@@ -8,7 +8,7 @@ import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import RegisterContextProvider from "./context/RegisterContext";
 import LoginContextProvider from "./context/LoginContext";
-import ShoppingCart from "./components/Cart";
+import Cart from "./components/Cart";
 import SingleProduct from "./components/SingleProduct";
 import ClickedProductContextProvider from "./context/ClickedProductContext";
 import Checkout from "./components/Checkout";
@@ -90,7 +90,7 @@ function App() {
           element={
             <CartProvider>
               <div className="h-screen">
-                <ShoppingCart />
+                <Cart />
               </div>
             </CartProvider>
           }
