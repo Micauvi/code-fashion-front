@@ -4,6 +4,7 @@ const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
+
   const [quantities, setQuantities] = useState([]);
 
   const [user, setUser] = useState(null);
