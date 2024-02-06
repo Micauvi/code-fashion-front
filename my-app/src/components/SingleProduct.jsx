@@ -107,7 +107,7 @@ const SingleProduct = () => {
   return (
     <>
       <div className="flex bg-white rounded-lg shadow-lg p-4 mx-auto mt-8 justify-center">
-        <div className="flex flex-col gap-24 lg:flex-row ">
+        <div className="flex flex-col lg:gap-24 lg:flex-row ">
           <img
             src={clickedProduct.image}
             alt="product_image"
@@ -115,7 +115,7 @@ const SingleProduct = () => {
           />
           <div className="">
             <p className="text-4xl font-bold">{clickedProduct.name}</p>
-            <p className="text-gray-700 text-xl my-2">
+            <p className="text-gray-700 text-xl mb-2">
               {clickedProduct.description}
             </p>
             <p className="text-blue-500 text-xl  my-4">
