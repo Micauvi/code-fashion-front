@@ -85,16 +85,7 @@ function App() {
             </CartProvider>
           }
         />
-        <Route
-          path="/cart"
-          element={
-            <CartProvider>
-              <div className="h-screen">
-                <Cart />
-              </div>
-            </CartProvider>
-          }
-        />
+
         <Route
           path="/checkout"
           element={
