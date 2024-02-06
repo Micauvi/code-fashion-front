@@ -6,8 +6,9 @@ import SearchBar from "./SearchBar";
 import Categories from "./Categories";
 import useAdmin from "../hooks/useAdmin";
 import Cart from "./Cart";
-import useCart from "../hooks/useCart";
 import { CartProvider } from "../context/CartContext";
+import cart from "../assets/cart.svg";
+
 const Navbar = ({
   searchBar,
   setSearchBar,
@@ -15,9 +16,7 @@ const Navbar = ({
   selectedCategory,
 }) => {
   const { hasAccess } = useAdmin();
-  // const { handleCartToggle, isCartOpen } = useCart();
   const [isCartOpen, setIsCartOpen] = useState(false);
-  console.log(isCartOpen);
 
   const handleCartToggle = () => {
     setIsCartOpen(!isCartOpen);
@@ -125,13 +124,7 @@ const Navbar = ({
                       >
                         Perfil
                       </Link>
-                      <Link
-                        to="/cart"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                        role="menuitem"
-                      >
-                        Carrito
-                      </Link>
+
                       <Link
                         to="/orders"
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -167,7 +160,9 @@ const Navbar = ({
                       </button>
                     </div>
                   )}
-                  <button onClick={handleCartToggle}>Abrir carrito</button>
+                  <button onClick={handleCartToggle} className="mx-4">
+                    <img src={cart} alt="carrito de compras" className="w-6" />
+                  </button>
                   {isCartOpen ? (
                     <div>
                       <CartProvider>
@@ -179,20 +174,55 @@ const Navbar = ({
                   )}
                 </div>
               ) : (
-                <div>
-                  <Link
-                    to="/login"
-                    className="text-gray-300 bg-indigo-600 hover:bg-indigo-500  hover:text-white px-3 py-2 mx-2 rounded-md text-sm font-medium"
+                <>
+                  <button
+                    onClick={() => setUserMenuOpen(!userMenuOpen)}
+                    type="button"
+                    className="bg-indigo-600 relative text-white px-4 py-2 rounded-md text-sm font-medium focus:outline-none"
+                    id="user-menu"
+                    aria-haspopup="true"
+                    aria-expanded="true"
                   >
-                    Iniciar sesión
-                  </Link>
-                  <Link
-                    to="/register"
-                    className="text-gray-300 bg-indigo-600  hover:bg-indigo-500  hover:text-white px-3 py-2 mx-2 rounded-md text-sm font-medium"
-                  >
-                    Registrarse
-                  </Link>
-                </div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      className="h-5 w-5"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M4 6h16M4 12h16M4 18h16"
+                      />
+                    </svg>
+                  </button>
+
+                  {userMenuOpen && (
+                    <div
+                      className="origin-top-right absolute  top-14 right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                      role="menu"
+                      aria-orientation="vertical"
+                      aria-labelledby="user-menu"
+                    >
+                      <Link
+                        to="/login"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        role="menuitem"
+                      >
+                        Iniciar Sesión
+                      </Link>
+                      <Link
+                        to="/register"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        role="menuitem"
+                      >
+                        Registrarse
+                      </Link>
+                    </div>
+                  )}
+                </>
               )}
             </div>
           </div>

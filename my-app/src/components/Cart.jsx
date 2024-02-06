@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import { Link } from "react-router-dom";
-import useCart from "../hooks/useCart";
 
 const Cart = ({ isCartOpen }) => {
   const { cartItems, removeFromCart, setCartItems } = useContext(CartContext);
