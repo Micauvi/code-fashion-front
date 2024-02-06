@@ -3,10 +3,8 @@ import { CartContext } from "../context/CartContext";
 import { Link } from "react-router-dom";
 import useCart from "../hooks/useCart";
 
-const ShoppingCart = () => {
+const Cart = ({ isCartOpen }) => {
   const { cartItems, removeFromCart, setCartItems } = useContext(CartContext);
-  const { isCartOpen } = useCart();
-  console.log(isCartOpen);
 
   const handleRemove = (index) => {
     removeFromCart(index);
@@ -48,7 +46,7 @@ const ShoppingCart = () => {
 
   return (
     <div
-      className={`fixed top-16 right-0 bottom-0 sm:w-3/4 md:w-1/2 xl:w-1/3    w-full bg-white z-20 transition-transform duration-300 ease-in-out ${
+      className={`fixed top-16 right-0 bottom-0 sm:w-3/4 md:w-1/2 xl:w-1/3  h-full w-full bg-transparent z-20 transition-transform duration-300 ease-in-out ${
         isCartOpen ? "transform translate-x-0" : "transform translate-x-full"
       }`}
     >
@@ -124,4 +122,4 @@ const ShoppingCart = () => {
   );
 };
 
-export default ShoppingCart;
+export default Cart;

@@ -15,7 +15,13 @@ const Navbar = ({
   selectedCategory,
 }) => {
   const { hasAccess } = useAdmin();
-  const { handleCartToggle, isCartOpen } = useCart();
+  // const { handleCartToggle, isCartOpen } = useCart();
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  console.log(isCartOpen);
+
+  const handleCartToggle = () => {
+    setIsCartOpen(!isCartOpen);
+  };
 
   const [userMenuOpen, setUserMenuOpen] = useState(false);
 
@@ -159,12 +165,17 @@ const Navbar = ({
                       >
                         Cerrar sesión
                       </button>
-                      <button onClick={handleCartToggle}>Abrir carrito</button>
-
+                    </div>
+                  )}
+                  <button onClick={handleCartToggle}>Abrir carrito</button>
+                  {isCartOpen ? (
+                    <div>
                       <CartProvider>
-                        <Cart />
+                        <Cart isCartOpen={isCartOpen} />
                       </CartProvider>
                     </div>
+                  ) : (
+                    ""
                   )}
                 </div>
               ) : (
